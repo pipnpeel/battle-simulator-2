@@ -1,9 +1,19 @@
 <?php
 
 require_once('vendor/autoload.php');
+echo '
+ ______         __   __   __
+|   __ \.---.-.|  |_|  |_|  |.-----.
+|   __ <|  _  ||   _|   _|  ||  -__|
+|______/|___._||____|____|__||_____|
+                                   ' .PHP_EOL;
 
-$playerOne = new Symm\Battle\Combatant\Brute('Bob');
-$playerTwo = new Symm\Battle\Combatant\Brute('Dave');
+echo 'Please enter the first Player\'s name: ';
+$name = readline();
+$playerOne = new Symm\Battle\Combatant\Brute($name);
+echo 'Please enter the second Player\'s name: ';
+$name = readline();
+$playerTwo = new Symm\Battle\Combatant\Brute($name);
 
 $game = new Symm\Battle\Game($playerOne, $playerTwo);
 
