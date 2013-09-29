@@ -25,5 +25,5 @@ if (!$game->isDraw()) {
     $winner = $game->getWinner();
     echo "The winner is " . $winner->getName() . PHP_EOL;
 } else {
-    echo 'Game was a draw';
+    echo 'Game was a draw' . PHP_EOL;
 }
