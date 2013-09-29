@@ -38,7 +38,10 @@ abstract class Combatant
             $setter = "set" . ucfirst($property);
             $this->$setter(mt_rand($this->validation[$property]['min'], $this->validation[$property]['max']));
         }
-        $this->setLuck(0.1);
+
+        $luck = (mt_rand($this->validation['luck']['min'] * 1000, $this->validation['luck']['max'] * 1000) / 1000);
+        $luck = number_format($luck, 2);
+        $this->setLuck($luck);
     }
 
     public function setDefense($defense)
