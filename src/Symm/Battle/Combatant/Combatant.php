@@ -11,11 +11,13 @@ abstract class Combatant
     private $defense;
     private $speed;
     private $luck;
+    private $stunned;
 
     public function __construct($name)
     {
         $this->setName($name);
         $this->generateProperties();
+        $this->stunned = false;
     }
 
     public function getType()
@@ -44,8 +46,24 @@ abstract class Combatant
         $this->setLuck($luck);
     }
 
+    public function stun()
+    {
+        $this->stunned = true;
+    }
+
+    public function isStunned()
+    {
+        return $this->stunned;
+    }
+
     public function attack(Combatant $defender)
     {
+
+        if ($this->isStunned()) {
+            $this->stunned = false;
+            return false;
+        }
+
         //@todo: handle special skills
 
         // If the defender is lucky enough we will miss
@@ -55,12 +73,20 @@ abstract class Combatant
             return false;
         }
 
+        $damage = $this->calculateDamage($defender);
+
+        $defender->removeHealth($damage);
+
+        return $damage;
+    }
+
+    private function calculateDamage(Combatant $defender)
+    {
         $damage = $this->getStrength() - $defender->getDefense();
+
         if ($damage < 0) {
             $damage = 0;
         }
-
-        $defender->removeHealth($damage);
 
         return $damage;
     }
