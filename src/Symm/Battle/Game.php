@@ -26,16 +26,10 @@ class Game
             return false;
         }
 
-        //@todo: handle special skills
-        $damage = $this->calculateDamage($this->attacker, $this->defender);
-
-        // @todo: implement luck / missing hit logic
-        $attackerWillMiss = false;
-
-        if ($attackerWillMiss) {
+        $damage = $this->attacker->attack($this->defender);
+        if (!$damage) {
             $this->roundLog[] = $this->attacker->getName() . ' Missed!';
         } else {
-            $this->defender->removeHealth($damage);
             $this->roundLog[] = $this->attacker->getName() . ' Hit ' . $this->defender->getName()
                 . ' for ' . $damage . ' damage';
         }
@@ -57,17 +51,6 @@ class Game
         reset($this->roundLog);
 
         return $log;
-    }
-
-    private function calculateDamage($attacker, $defender)
-    {
-        $damage = $attacker->getStrength() - $defender->getDefense();
-
-        if ($damage < 0) {
-            $damage = 0;
-        }
-
-        return $damage;
     }
 
     public function isFinished()

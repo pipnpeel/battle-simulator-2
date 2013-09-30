@@ -44,6 +44,27 @@ abstract class Combatant
         $this->setLuck($luck);
     }
 
+    public function attack(Combatant $defender)
+    {
+        //@todo: handle special skills
+
+        // If the defender is lucky enough we will miss
+        $luck = $defender->getLuck();
+        $willMiss = mt_rand(1, 100) > ($luck * 100) ? false : true;
+        if ($willMiss == true) {
+            return false;
+        }
+
+        $damage = $this->getStrength() - $defender->getDefense();
+        if ($damage < 0) {
+            $damage = 0;
+        }
+
+        $defender->removeHealth($damage);
+
+        return $damage;
+    }
+
     public function setDefense($defense)
     {
         if (!is_integer($defense)) {
