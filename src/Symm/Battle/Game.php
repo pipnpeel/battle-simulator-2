@@ -14,10 +14,27 @@ class Game
     private $gameOver = false;
     private $winner;
 
-    public function __construct($playerOne, $playerTwo, $maxRounds = 30)
+    public function __construct($playerOneName, $playerTwoName, $maxRounds = 30)
     {
+        $playerOne= $this->getRandomCombatant($playerOneName);
+        $playerTwo= $this->getRandomCombatant($playerTwoName);
+
         $this->maxRounds = $maxRounds;
         $this->decideAttackerAndDefender($playerOne, $playerTwo);
+    }
+
+    public function getCombatantTypes()
+    {
+        // @todo get declared classes in Combatant namespace instead of defined list
+        return array('Brute', 'Grappler', 'Swordsman');
+    }
+
+    public function getRandomCombatant($name)
+    {
+        $types = $this->getCombatantTypes();
+        $type  = $types[array_rand($types, 1)];
+        $type  = "Symm\\Battle\\Combatant\\" . $type;
+        return new $type($name);
     }
 
     public function doRound()

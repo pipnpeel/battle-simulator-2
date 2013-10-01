@@ -10,10 +10,8 @@ echo '
 
 echo 'Please enter the first Player\'s name: ';
 $name = readline();
-$playerOne = new Symm\Battle\Combatant\Brute($name);
 echo 'Please enter the second Player\'s name: ';
 $name = readline();
-$playerTwo = new Symm\Battle\Combatant\Brute($name);
 
 $game = new Symm\Battle\Game($playerOne, $playerTwo);
 
